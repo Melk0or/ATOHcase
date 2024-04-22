@@ -1,0 +1,221 @@
+openapi: 3.0.0
+paths:
+  /:
+    get:
+      operationId: AppController_getHello
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /auth/sign-up:
+    post:
+      operationId: AuthController_signUp
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SingUpBodyDto'
+      responses:
+        '201':
+          description: ''
+  /auth/sign-in:
+    post:
+      operationId: AuthController_signIn
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SingInBodyDto'
+      responses:
+        '200':
+          description: ''
+  /auth/sign-out:
+    post:
+      operationId: AuthController_signOut
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /auth/session-info:
+    get:
+      operationId: AuthController_getSessionInfo
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionInfoDto'
+  /table/clients:
+    post:
+      operationId: TableController_addClient
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddClienBodytDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDto'
+    get:
+      operationId: TableController_getClients
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDto'
+    patch:
+      operationId: TableController_updateClientStatus
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateClientDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDto'
+info:
+  title: ATOHApi
+  description: simple api for testCase
+  version: 1.0.0
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas:
+    SingUpBodyDto:
+      type: object
+      properties:
+        login:
+          type: string
+          example: login
+        pasword:
+          type: string
+          example: password
+        fullName:
+          type: string
+          example: Гаджиев Расул Садуллаевич
+      required:
+        - login
+        - pasword
+        - fullName
+    SingInBodyDto:
+      type: object
+      properties:
+        login:
+          type: string
+          example: login
+        pasword:
+          type: string
+          example: password
+      required:
+        - login
+        - pasword
+    SessionInfoDto:
+      type: object
+      properties:
+        id:
+          type: number
+        login:
+          type: string
+        fullName:
+          type: string
+        iat:
+          type: number
+        exp:
+          type: number
+      required:
+        - id
+        - login
+        - fullName
+        - iat
+        - exp
+    AddClienBodytDto:
+      type: object
+      properties:
+        accountNumber:
+          type: number
+        fullName:
+          type: string
+        birthDate:
+          format: date-time
+          type: string
+        EIN:
+          type: string
+      required:
+        - accountNumber
+        - fullName
+        - birthDate
+        - EIN
+    ClientDto:
+      type: object
+      properties:
+        id:
+          type: number
+        account_number:
+          type: number
+        first_name:
+          type: string
+        last_name:
+          type: string
+        surname:
+          type: string
+        birth_date:
+          format: date-time
+          type: string
+        EIN:
+          type: string
+        ownerName:
+          type: string
+        status:
+          type: string
+          enum:
+            - Deal_closed
+            - In_Work
+            - Not_at_work
+            - Reject
+      required:
+        - id
+        - account_number
+        - first_name
+        - last_name
+        - surname
+        - birth_date
+        - EIN
+        - ownerName
+        - status
+    UpdateClientDto:
+      type: object
+      properties:
+        clientId:
+          type: number
+        status:
+          type: string
+          enum:
+            - Deal_closed
+            - In_Work
+            - Not_at_work
+            - Reject
+      required:
+        - clientId
+        - status
